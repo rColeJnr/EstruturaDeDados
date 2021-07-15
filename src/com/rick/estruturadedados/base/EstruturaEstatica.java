@@ -1,19 +1,26 @@
-package com.rick.estruturadedados.vetor;
+package com.rick.estruturadedados.base;
 
 import java.util.Arrays;
 
-public class Lista<T> {
+public class EstruturaEstatica<T> {
 
+    protected T[] elementos;
+    protected int tamanho;
 
-    private T[] elementos;
-    private int tamanho;
-
-    public Lista(int capacidade){
+    public EstruturaEstatica(int capacidade){
         this.elementos = (T[])  new Object[capacidade];
         this.tamanho = 0;
     }
 
-    public boolean adiciona(T elemento) {
+    public EstruturaEstatica(){
+        this(10);
+    }
+
+    public boolean estaVazia(){
+        return this.tamanho == 0;
+    }
+
+    protected boolean adiciona(T elemento) {
         aumentaCapacidade();
         if (this.tamanho < this.elementos.length) {
 
@@ -25,7 +32,7 @@ public class Lista<T> {
         }
     }
 
-    public boolean adiciona(int posicao, T elemento) {
+    protected boolean adiciona(int posicao, T elemento) {
         aumentaCapacidade();
         if (!(this.tamanho < this.elementos.length)) {
             throw new NullPointerException("Posicao invalida");
@@ -96,7 +103,7 @@ public class Lista<T> {
         }
     }
 
-    public void remove(int posicao) {
+    protected void remove(int posicao) {
 
         if (!(posicao >=0 && posicao<tamanho)) throw new NullPointerException();
 
@@ -108,34 +115,4 @@ public class Lista<T> {
         // mas acredito que envetualmente tambem vamos ver garbage colector.
 //        elementos[tamanho] = null;
     }
-
-    // Exercicios
-    public void remove(T elemento) {
-        remove(busca(elemento));
-    }
-
-    public boolean contem(T elemento){
-        if (busca(elemento) >= 0) return true;
-        else return false;
-    }
-
-    public int ultimoElemento(){
-        return getTamanho() - 1;
-    }
-
-    public T obter(int posicao){
-        return elementos[posicao];
-    }
-
-    public void limpar(){
-        // općão 1
-        elementos = (T[])  new Object[this.getTamanho()];
-        tamanho = 0;
-        // općão 2
-        for (int i=0; i<this.tamanho; i++){
-            this.elementos[i] = null;
-        }
-        this.tamanho = 0;
-    }
-
 }
